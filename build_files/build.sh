@@ -19,3 +19,16 @@ rm /usr/libexec/ntfs_exfat_monitor_script
 
 # tailscalery
 systemctl enable tailscaled.service
+
+# rebrandery
+rm /usr/share/icons/hicolor/scalable/places/bazzite-logo.svg
+rm /usr/share/icons/hicolor/scalable/places/bazzite-logo-white.svg
+mv /usr/share/icons/hicolor/scalable/places/distributor-logo.svg /usr/share/icons/hicolor/scalable/places/bazzite-logo.svg
+mv /usr/share/icons/hicolor/scalable/places/distributor-logo-white.svg /usr/share/icons/hicolor/scalable/places/bazzite-logo-white.svg
+ln -s /usr/share/icons/hicolor/scalable/places/glorp-logo.svg /usr/share/icons/hicolor/scalable/places/distributor-logo.svg
+ln -s /usr/share/icons/hicolor/scalable/places/glorp-logo-white.svg /usr/share/icons/hicolor/scalable/places/distributor-logo-white.svg
+
+# initramfsery
+QUALIFIED_KERNEL="$(dnf5 repoquery --installed --queryformat='%{evr}.%{arch}' "kernel")"
+/usr/bin/dracut --no-hostonly --kver "$QUALIFIED_KERNEL" --reproducible --zstd -v --add ostree --add fido2 -f "/usr/lib/modules/$QUALIFIED_KERNEL/initramfs.img"
+chmod 0600 /usr/lib/modules/"$QUALIFIED_KERNEL"/initramfs.img
