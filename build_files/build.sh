@@ -2,23 +2,20 @@
 
 set -ouex pipefail
 
-### Install packages
+# libvirtery
+dnf5 install -y qemu libvirt guestfs-tools
+systemctl enable libvirtd.service
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
+# automountery
+systemctl disable ublue-os-media-automount.service
+dnf5 remove -y ublue-os-media-automount-udev
+rm /usr/lib/udev/rules.d/99-framework-steam-automount.rules
+rm /usr/lib/udev/rules.d/99-steamos-automount.rules
 
-# this installs a package from fedora repos
-dnf5 install -y tmux 
+# ntfsery
+systemctl --global disable ntfs-nag.service
+rm /usr/lib/systemd/user/ntfs-nag.service
+rm /usr/libexec/ntfs_exfat_monitor_script
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
-
-#### Example for enabling a System Unit File
-
-systemctl enable podman.socket
+# tailscalery
+systemctl enable tailscaled.service
