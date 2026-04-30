@@ -12,6 +12,29 @@ dnf5 remove -y ublue-os-media-automount-udev
 rm /usr/lib/udev/rules.d/99-framework-steam-automount.rules
 rm /usr/lib/udev/rules.d/99-steamos-automount.rules
 
+# user and group fix, taken from bazzite
+if [ -f /etc/passwd ]; then
+    out=$(grep -v "root" /etc/passwd) || true
+    if [ -n "$out" ]; then
+        echo
+        echo Moving the following passwd users to /usr/lib/passwd
+        echo "$out"
+        echo "$out" >> /usr/lib/passwd
+        echo "root:x:0:0:root:/root:/bin/bash" > /etc/passwd
+    fi
+fi
+if [ -f /etc/group ]; then
+    out=$(grep -v "root\|wheel" /etc/group) || true
+    if [ -n "$out" ]; then
+        echo
+        echo Moving the following group entries to /usr/lib/group
+        echo "$out"
+        echo "$out" >> /usr/lib/group
+        echo "root:x:0:" > /etc/group
+        echo "wheel:x:10:" >> /etc/group
+    fi
+fi
+
 # ntfsery
 systemctl --global disable ntfs-nag.service
 rm /usr/lib/systemd/user/ntfs-nag.service
