@@ -38,7 +38,7 @@ fi
 # ntfsery
 systemctl --global disable ntfs-nag.service
 rm /usr/lib/systemd/user/ntfs-nag.service
-rm /usr/libexec/ntfs_exfat_monitor_script
+rm /usr/libexec/ntfs-exfat-monitor-script
 
 # tailscalery
 systemctl enable tailscaled.service
