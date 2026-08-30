@@ -40,6 +40,9 @@ systemctl --global disable ntfs-nag.service
 rm /usr/lib/systemd/user/ntfs-nag.service
 rm /usr/libexec/ntfs-exfat-monitor-script
 
+# xwaylandvideobridgery
+dnf5 remove -y xwaylandvideobridge
+
 # tailscalery
 systemctl enable tailscaled.service
 
