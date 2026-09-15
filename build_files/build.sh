@@ -40,6 +40,11 @@ systemctl --global disable ntfs-nag.service
 rm /usr/lib/systemd/user/ntfs-nag.service
 rm /usr/libexec/ntfs-exfat-monitor-script
 
+# bbrewery
+rm /usr/bin/bbrew-helper
+rm /usr/share/applications/bbrew.desktop
+rm /usr/share/ublue-os/bbrew.png
+
 # xwaylandvideobridgery
 dnf5 remove -y xwaylandvideobridge
 
