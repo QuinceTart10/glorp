@@ -4,6 +4,7 @@ set -ouex pipefail
 
 # stripdownery
 dnf5 remove -y xwaylandvideobridge fedora-bookmarks fedora-chromium-config fedora-chromium-config-kde plasma-browser-integration bazaar
+rm -r /usr/share/ublue-os/bazaar
 
 # automountery
 systemctl disable ublue-os-media-automount.service
